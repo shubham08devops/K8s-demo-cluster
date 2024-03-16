@@ -10,10 +10,6 @@ Make sure you have installed all of the following prerequisites on your developm
 Make sure you have installed all of the following prerequisites on your development machine:
 * AWS-CLI - [Download & Install AWS CLI ](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
 
-```bash
-$ npm install -g bower
-```
-
 ## Setup
 There are several steps you need to follow:
 * aws configure

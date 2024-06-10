@@ -7,8 +7,7 @@ $3 k8s-worker1
 $4 k8s-worker2
 EOF
 
-# On all nodes, set up Docker Engine and containerd. You will need to load some kernel modules and modify some system settings as part of this
-process:
+# On all nodes, set up Docker Engine and containerd. You will need to load some kernel modules and modify some system settings as part of this process:
 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -51,7 +50,7 @@ sudo apt update
 
 # Install Docker Engine, containerd, and Docker Compose:
 
-VERSION_STRING=5:23.0.1-1~ubuntu.20.04~focal
+VERSION_STRING=5:26.1.4-1~ubuntu.22.04~jammy
 sudo apt install -y docker-ce=$VERSION_STRING docker-ce-cli=$VERSION_STRING containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Add your 'cloud_user' to the docker group:
@@ -76,12 +75,10 @@ sudo swapoff -a
 
 # On all nodes, install kubeadm, kubelet, and kubectl:
 
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.26/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-cat << EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
-deb https://apt.kubernetes.io/ kubernetes-xenial main
-EOF
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.26/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-sudo apt update && sudo apt install -y kubelet=1.27.0-00 kubeadm=1.27.0-00 kubectl=1.27.0-00
+sudo apt update && sudo apt install -y kubelet=1.26.0-* kubeadm=1.26.0-* kubectl=1.26.0-*
 
 sudo apt-mark hold kubelet kubeadm kubectl

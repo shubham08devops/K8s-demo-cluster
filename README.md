@@ -4,7 +4,7 @@ A simple kubeadm based cluster with 1 control &amp; 2 worker nodes
 
 ## Before You Begin
 Make sure you have installed all of the following prerequisites on your development machine:
-* This setup will work on Ubuntu/Debian based systems, Please replace apt commands with yum if you're trying to run on RHEL based systems.
+* This setup will work on Ubuntu based systems (22.04 jammy), Please replace apt commands with yum if you're trying to run on RHEL based systems.
 
 ## Prerequisites
 Make sure you have installed all of the following prerequisites on your development machine:

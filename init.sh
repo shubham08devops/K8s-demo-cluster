@@ -1,5 +1,4 @@
 #!/bin/bash
-pemFile=$1
 chmod 400 ~/Downloads/k8s-demo-cluster.pem
 
 INSTANCE_NAMES="k8s-control","k8s-worker1","k8s-worker2"
@@ -19,12 +18,12 @@ for instance_name in $INSTANCE_NAMES; do
           if [ $instance_name == "k8s-control" ]
           then
                 ssh -oStrictHostKeyChecking=no -i ~/Downloads/k8s-demo-cluster.pem ubuntu@"$instance_public_ip" '''# On the control plane node only, initialize the cluster and set up kubectl access:
-                sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.27.0
+                sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.26.0
                 mkdir -p $HOME/.kube
                 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
                 sudo chown $(id -u):$(id -g) $HOME/.kube/config
                 kubectl get nodes
-                kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
+                kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/calico.yaml
                 sleep 30
 		curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
 		echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helmstable-debian.list
